@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realidade Virtual</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: ariel, Arial, Helvetica, sans-serif;
+      }
+      .controles {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgb(0, 0, 0, 0.5);
+        color: aliceblue;
+        padding: 10px 15px;
+        border-radius: 8px;
+        z-index: 100px;
+        font-size: 14px;
+      }
+      .controles p {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controles">
+      <p><b>Controles</b></p>
+      <p>- Arraste para olhar ao redor</p>
+      <p>- Setas do teclado para ajustar a posição</p>
+      <p>- Teclas R para reiniciar a posição</p>
+      <p>- ESC para sair d modo VR</p>
+    </div>
+    <a-scene vr-mode-ui="enable: true" embedded>
+      <a-assets>
+        <img src="AdobeStock_210639467.jpeg" id="texturaCeu" />
+      </a-assets>
+
+      <!-- Construindo o CCeu cam a imagem -->
+      <a-sky id="caixaCeu" src="#texturaCeu" rotation="0 0 0"> </a-sky>
+
+      <!-- Contruir a camera -->
+      <a-camera position="0 1.6 0" look-constrols="reverseMouseDrag: true">
+        <a-cursos></a-cursos>
+      </a-camera>
+    </a-scene>
+
+   
+    <script>
+        let rotacaoCeu = {x:0, y:0, z:0}
+        document.querySelector('a-scene').addEventListener('loaded', function(){
+            setTimeout(function(){
+                entradaModoVr()
+            },1000)
+        })
+        function entradaModoVr(){
+            const cena = document.querySelector('a-scene')
+            if(cena.hasLoaded){
+                cena.enterVR()
+            }else{
+                cena.addEventListener('loaded', function(){
+                    cena.enterVR()
+                })
+            }
+        }
+    </script>
+  </body>
+</html>
